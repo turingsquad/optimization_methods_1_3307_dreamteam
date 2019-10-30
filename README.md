@@ -1,7 +1,8 @@
 # Optimization Methods Lab 1 M3307
 
 
-##Maintainers:
-Alexander Kosturenko
-Ilya Elikov
-Ekaterina Ladokhina
+## Maintainers:
+
+1. Alexander Kosturenko
+2. Ilya Elikov
+3. Ekaterina Ladokhina
