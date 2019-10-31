@@ -20,6 +20,13 @@ def distance_between(x1, x2):
     dist = math.sqrt(dist)
     return dist 
 
+def calculate_len(vector):
+    length = 0
+    for i in vector:
+        length += i ** 2
+    length = math.sqrt(length)
+    return length
+
 def dichotomy_method(f, a, b, eps=1e-4):
     sigma = eps / 2.0
     x = [(a[0] + b[0]) / 2.0, (a[1] + b[1]) / 2.0]
@@ -36,13 +43,15 @@ def dichotomy_method(f, a, b, eps=1e-4):
         x = [(a[0] + b[0]) / 2.0, (a[1] + b[1]) / 2.0]
     return x
 
-def steepest_descent(f, x, gradient_func, eps=1e-4):
+def steepest_descent(f, x, gradient_func, eps=1e-2):
     x_prev = x.copy()
     x_new = [x_prev[0] + (eps * 2), x_prev[1] + (eps * 2)]
     i = 0 
-    limit = 2
-    while (abs(f(x) - f(x_new)) > eps ) and (abs(distance_between(x_prev, x_new)) > eps) and ( i <= limit):
+    limit = 100000
+    while (abs(f(x) - f(x_new)) > eps ) and (abs(distance_between(x_prev, x_new)) > eps):
         grad = gradient_func(f, x_prev[0], x_prev[1])
+        grad_len = calculate_len(grad)
+        grad = [grad[0]/grad_len, grad[1]/grad_len]
         h = 1e-2
         x_temp = x_new.copy()
         x_new = [x_prev[0] - h * grad[0], x_prev[1] - h * grad[1]]
@@ -52,4 +61,4 @@ def steepest_descent(f, x, gradient_func, eps=1e-4):
     return x_new
 
 
-print(str(steepest_descent(func, [75, 768], num_gradient)))
+print(str(steepest_descent(func, [20, 20], num_gradient)))
