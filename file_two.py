@@ -16,7 +16,7 @@ def an_gradient(f, x1, x2):
 def distance_between(x1, x2):
     dist = 0
     for i in range(len(x1)):
-        dist += (x2[i] - x1[i])
+        dist += (x2[i] - x1[i])**2
     dist = math.sqrt(dist)
     return dist 
 
@@ -40,16 +40,16 @@ def steepest_descent(f, x, gradient_func, eps=1e-4):
     x_prev = x.copy()
     x_new = [x_prev[0] + (eps * 2), x_prev[1] + (eps * 2)]
     i = 0 
-    limit = 5000
-    while (abs(f(x) - f(x_new)) > eps ) and (abs(distance_between(x_prev, x_new)) > eps) and (i <= limit):
+    limit = 2
+    while (abs(f(x) - f(x_new)) > eps ) and (abs(distance_between(x_prev, x_new)) > eps) and ( i <= limit):
         grad = gradient_func(f, x_prev[0], x_prev[1])
-        h = 1e-9
+        h = 1e-2
         x_temp = x_new.copy()
-        x_new = [x_prev[0] + h * grad[0], x_prev[1] + h * grad[1]]
+        x_new = [x_prev[0] - h * grad[0], x_prev[1] - h * grad[1]]
         x_prev = x_temp
-        print("x_prev = " + str(x_prev) + " x_new = " + str(x_new))
+        print("x_prev = " + str(x_prev) + " x_new = " + str(x_new) + " grad = " + str(grad))
         i += 1
     return x_new
 
 
-print(str(steepest_descent(func, [100, 100], num_gradient)))
+print(str(steepest_descent(func, [75, 768], num_gradient)))
