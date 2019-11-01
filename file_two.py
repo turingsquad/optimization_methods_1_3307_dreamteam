@@ -27,21 +27,25 @@ def calculate_len(vector):
     length = math.sqrt(length)
     return length
 
-def dichotomy_method(f, a, b, eps=1e-4):
+def dichotomy_method(f, a, b, x, gradient, eps=1e-4):
+    x1_temp = x2_temp = x
     sigma = eps / 2.0
-    x = [(a[0] + b[0]) / 2.0, (a[1] + b[1]) / 2.0]
-    while distance_between(a, b) > eps:
-        x1 = [x[0] - sigma, x[1] - sigma]
-        x2 = [x[0] + sigma, x[0] + sigma]
-        if f(x1) < f(x2):
+    mid = abs(b - a) / 2.0
+    while abs(b - a) > eps:
+        x1 = mid - sigma
+        x2 = mid + sigma
+        for i in range(len(x)):
+            x1_temp[i] = x[i] - x1 * gradient[i]
+            x2_temp[i] = x[i] - x2 * gradient[i]
+        if f(x1_temp) < f(x2_temp):
             b = x1
-        elif f(x1) > f(x2):
+        elif f(x1_temp) > f(x2_temp):
             a = x2
         else:
             a = x1
             b = x2
-        x = [(a[0] + b[0]) / 2.0, (a[1] + b[1]) / 2.0]
-    return x
+        mid = abs(b - a) / 2.0
+    return mid
 
 def steepest_descent(f, x, gradient_func, eps=1e-2):
     x_prev = x.copy()
@@ -52,7 +56,7 @@ def steepest_descent(f, x, gradient_func, eps=1e-2):
         grad = gradient_func(f, x_prev[0], x_prev[1])
         grad_len = calculate_len(grad)
         grad = [grad[0]/grad_len, grad[1]/grad_len]
-        h = 1e-2
+        h = dichotomy_method(f, 0, math.pi, x_prev, grad)
         x_temp = x_new.copy()
         x_new = [x_prev[0] - h * grad[0], x_prev[1] - h * grad[1]]
         x_prev = x_temp
