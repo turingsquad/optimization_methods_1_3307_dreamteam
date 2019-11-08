@@ -47,7 +47,7 @@ def fibonacci_method(a, b, e = 1e-4, i = 0):
     fib2 = fibonacci(i)
     x1 = a + fib0 / fib2 * (b - a)
     x2  = a + fib1 / fib2 * (b - a)
-    while b - a > e:    
+    while b - a > e:
         x1 = a + fib0 / fib2 * (b - a)
         x2  = a + fib1 / fib2 * (b - a)
         if f(x1) < f(x2):
@@ -58,3 +58,24 @@ def fibonacci_method(a, b, e = 1e-4, i = 0):
             a = x1
             b = x2
     return (x1 + x2) / 2
+
+
+def line_search(x0, sigma):
+    x1 = 0
+    h = 0
+    if f(x0) > f(x0 + sigma):
+        x1 = x0 + sigma
+        h = sigma
+    elif f(x0) > f(x0 - sigma):
+        x1 = x0 - sigma
+        h = -sigma
+    h *= 2
+    x = x1
+    x_nxt = x + h
+    x_prev = x0
+    while f(x) > f(x_nxt):
+        h *= 2
+        x_prev = x
+        x = x_nxt
+        x_nxt = x + h
+    return [x_prev, x_nxt]
