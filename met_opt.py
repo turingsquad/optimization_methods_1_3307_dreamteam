@@ -70,12 +70,12 @@ def line_search(x0, sigma):
         x1 = x0 - sigma
         h = -sigma
     h *= 2
-    x_k = x1
-    x_k1 = x_k + h  #xk+1
-    xk1 = x0        #xk-1
-    while f(x_k) > f(x_k1):
+    x = x1
+    x_nxt = x + h
+    x_prev = x0
+    while f(x) > f(x_nxt):
         h *= 2
-        xk1 = x_k
-        x_k = x_k1
-        x_k1 = x_k + h
-    return xk1, x_k1
+        x_prev = x
+        x = x_nxt
+        x_nxt = x + h
+    return [x_prev, x_nxt]
