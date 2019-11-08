@@ -49,7 +49,7 @@ def dichotomy_method(f, a, b, x, gradient, eps=1e-4):
         else:
             a = x1
             b = x2
-        mid = abs(b - a) / 2.0
+        mid = (b + a) / 2.0
     return mid
 
 def golden_section_method(f, a, b, x, gradient, eps=1e-4):
