@@ -50,7 +50,7 @@ def dichotomy_method(f, a, b, x, gradient, eps=1e-4):
     x1_temp = [0, 0]
     x2_temp = [0, 0]
     sigma = eps / 2.0
-    mid = abs(b - a) / 2.0
+    mid = (b + a) / 2.0
     while abs(b - a) > eps:
         x1 = mid - sigma
         x2 = mid + sigma
@@ -64,19 +64,18 @@ def dichotomy_method(f, a, b, x, gradient, eps=1e-4):
         else:
             a = x1
             b = x2
-        mid = abs(b - a) / 2.0
+        mid = (b + a) / 2.0
     return mid
 
 def steepest_descent(f, x, gradient_func, eps=1e-2):
     x_prev = x.copy()
     x_new = [x_prev[0] + (eps * 2), x_prev[1] + (eps * 2)]
-    i = 0 
-    limit = 100000
+    i = 0
     while (abs(f(x_prev) - f(x_new)) > eps ) and (abs(distance_between(x_prev, x_new)) > eps):
         grad = gradient_func(f, x_prev[0], x_prev[1])
         grad_len = calculate_len(grad)
         grad = [grad[0]/grad_len, grad[1]/grad_len]
-        h = dichotomy_method(f, 0, 100000, x_prev, grad)
+        h = golden_section_method(f, 0, 100000, x_prev, grad)
         x_temp = x_new.copy()
         x_new = [x_prev[0] - h * grad[0], x_prev[1] - h * grad[1]]
         x_prev = x_temp
