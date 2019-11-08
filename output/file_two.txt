@@ -1,0 +1,4 @@
+iterations = 22
+coordinates = [1.0144691036128486, 1.035441895576732]
+function value = 0.000248973592204908
+count of calling function = 1639
