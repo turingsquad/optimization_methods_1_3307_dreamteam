@@ -79,6 +79,7 @@ def fibonacci_method(a, b, e = 1e-4, i = 0):
 
 
 def line_search(x0, sigma):
+    output_file.write("line_search\n")
     x1 = 0
     h = 0
     if f(x0) > f(x0 + sigma):
@@ -91,14 +92,21 @@ def line_search(x0, sigma):
     x = x1
     x_nxt = x + h
     x_prev = x0
+    it = 1
+    output_file.write("i: " + str(it) + " left_border: " + str(x_prev) + " right_border: " 
+                        + str(x_nxt) + " f(x_nxt): " + str(f(x_nxt)) + " x: " + str(x) + " f(x): " + str(f(x)) + " h: " + str(h))
     while f(x) > f(x_nxt):
+        it += 1
         h *= 2
         x_prev = x
         x = x_nxt
         x_nxt = x + h
+        output_file.write("i: " + str(it) + " left_border: " + str(x_prev) + " right_border: " 
+                        + str(x_nxt) + " x: " + str(x) + " h: " + str(h))
     return [x_prev, x_nxt]
 
 
 dichotomy_method(0, math.pi)
 golden_section_method(0, math.pi)
 fibonacci_method(0, math.pi)
+line_search(0, math.pi)
