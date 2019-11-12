@@ -3,6 +3,6 @@
 
 ## Maintainers:
 
-1. Alexander Kosturenko
+1. Alexander Kostyurenko
 2. Ilya Elikov
 3. Ekaterina Ladokhina
